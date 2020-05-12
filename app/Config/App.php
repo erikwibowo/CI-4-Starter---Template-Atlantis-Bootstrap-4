@@ -2,6 +2,15 @@
 
 use CodeIgniter\Config\BaseConfig;
 
+if (is_cli()) {
+	$dynamicUrl = "";
+} else {
+	$dynamicUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+	$dynamicUrl .= "://" . $_SERVER['HTTP_HOST'];
+	$dynamicUrl .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
+}
+defined("DYNAMIC_URL") or define("DYNAMIC_URL", $dynamicUrl);
+
 class App extends BaseConfig
 {
 
